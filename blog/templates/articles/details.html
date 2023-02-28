@@ -6,6 +6,7 @@
 
 {% block body %}
     <h1> {{article_name}}:</h1>
-    <div>Text {{article_id}}</div>
+    <h2><a href="{{ url_for('user.get_user', pk=article_author)}}">{{article_author}}</a></h2>
+    <div>{{article_text}}</div>
 
 {% endblock%}

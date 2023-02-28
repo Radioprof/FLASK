@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Users list
+    Articles list
 {% endblock %}
 
 {% block body %}
@@ -10,7 +10,7 @@
             <h1> ARTICLES:</h1>
             {% for article_id in articles %}
                 <ul>
-                    <li><a href="{{ url_for('article.get_article', pk=article_id)}}"> {{ articles[article_id] }}</a></li>
+                    <li><a href="{{ url_for('article.get_article', pk=article_id)}}"> {{ articles[article_id][0] }}</a></li>
                 </ul>
             {% endfor %}
         </div>
