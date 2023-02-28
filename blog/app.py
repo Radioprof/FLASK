@@ -1,12 +1,16 @@
-from flask import Flask, request
+from flask import Flask
 
-app = Flask(__name__)
+from blog.report.views import report
+from blog.user.views import user
 
 
-@app.route("/", methods=['POST', 'GET'])
-def index():
-    if request.method == 'POST':
-        return "Старт проекта FLASK! (POST)"
-    elif request.method == 'GET':
-        return "Старт проекта FLASK! (GET)"
-    return "Работаем дальше."
+def create_app() -> Flask:
+    app = Flask(__name__)
+    register_blueprint(app)
+    return app
+
+
+def register_blueprint(app: Flask):
+    app.register_blueprint(user)
+    app.register_blueprint(report)
+
