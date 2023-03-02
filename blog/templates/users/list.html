@@ -11,13 +11,10 @@
             {% for user in users %}
                 <ul>
                     <li>
-                        <a href="{{ url_for('user_app.details', user_id=user.id)}}"> {{ user.username - }}</a>
-                        {% if user.is_staff %}
-                            <span class="badge db-secondary">staff</span>
-                        {% endif %}
+                        <a href="{{ url_for('user.profile', pk=user.id) }}"> {{ user.email }}</a>
                     </li>
                 </ul>
             {% endfor %}
         </div>
     </div>
-{% endblock%}
+{% endblock %}
