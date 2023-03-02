@@ -1,29 +1,27 @@
 from flask import Blueprint, render_template, redirect
 
-user = Blueprint('user', __name__, url_prefix='/users', static_folder='../static')
+from blog.models import User
+from blog.user import auth
 
-USERS = {
-    1: 'Alice',
-    2: 'Jon',
-    3: 'Mike',
-}
+user = Blueprint('user', __name__, url_prefix='/users', static_folder='../static')
 
 
 @user.route('/')
 def user_list():
+    users = User.query.all()
     return render_template(
         'users/list.html',
-        users=USERS
+        users=users
     )
 
 
-@user.route('/<int:pk>')
-def get_user(pk: int):
+@user.route('/<int:user_id>/')
+def get_user(user_id: int):
     try:
-        user_name = USERS[pk]
+        user = User.query.filter_by(id=user_id).one_or_none()
     except KeyError:
         return redirect('/users/')
-    return render_template(
-        'users/details.html',
-        user_name=user_name,
-    )
+    return render_template('users/details.html', user=user)
+
+
+
