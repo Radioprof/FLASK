@@ -1,31 +1,28 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 
-from blog.article.views import article
-from blog.auth.views import auth
-from blog.report.views import report
-from blog.user.views import user
-
-
-db = SQLAlchemy()
+from blog.views.article import articles_app
+from blog.views.auth import auth_app, login_manager
+from blog.views.users import users_app
+from blog.models.database import db
+from flask_migrate import Migrate
+import os
 
 
-def create_app() -> Flask:
-    app = Flask(__name__)
+app = Flask(__name__)
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = '(cb!h&a)y8j*i-x62*d#t@3u2t!%6^5c8=n9l3339y)7gq&+o)'
+# cfg_name = os.environ.get("TestingConfig")
+# app.config.from_object(f"blog.configs.{cfg_name}")
 
-    db.init_app(app)
+migrate = Migrate(app, db, compare_type=True)
 
-    register_blueprint(app)
-    return app
+app.register_blueprint(users_app)
+app.register_blueprint(articles_app)
+app.register_blueprint(auth_app, url_prefix="/auth")
 
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///blog.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = '(cb!h&a)y8j*i-x62*d#t@3u2t!%6^5c8=n9l3339y)7gq&+o)'
 
-def register_blueprint(app: Flask):
-    app.register_blueprint(user)
-    app.register_blueprint(report)
-    app.register_blueprint(article)
-    app.register_blueprint(auth)
+db.init_app(app)
 
+login_manager.init_app(app)
