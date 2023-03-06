@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Article detail
+{% endblock %}
+
+{% block body %}
+<h1> {{article_name}}:</h1>
+<h2><a href="{{ url_for('user.get_user', pk=article_author)}}">Author:{{article_author}}</a></h2>
+
+<div>{{article_text}}</div>
+
+{% endblock%}
