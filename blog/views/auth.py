@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from werkzeug.security import check_password_hash
+from wtforms import validators
 
-from blog.forms.auth import AuthForm
-from blog.forms.user import UserRegisterForm
+
+from blog.forms.user import AuthForm
 from blog.models.user import User
 
 auth_app = Blueprint('auth_app', __name__)
@@ -32,18 +34,24 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('articles_app.list'))
 
-    form = UserRegisterForm(request.form)
+    form = AuthForm(request.form)
     errors = []
 
     if request.method == "POST" and form.validate_on_submit():
-        _user = User.query.filter_by(username=form.username.data).one_or_none()
-    if _user is None:
-        return render_template("auth/login.html", form=form, error="username doesn't exist")
-    if not _user.validate_password(form.password.data):
-        return render_template("auth/login.html", form=form, error="invalid username or password")
+        user = User.query.filter_by(username=form.username.data).one_or_none()
+        if user is None:
+            return render_template("auth/login.html", form=form, errors="username doesn't exist")
+        if not check_password_hash(user.password, form.password.data):
+            return render_template("auth/login.html", form=form, errors="invalid username or password")
 
-    login_user(_user)
-    return redirect(url_for('articles_app.list'))
+        login_user(user)
+        return redirect(url_for('users_app.list'))
+
+    return render_template(
+        'auth/login.html',
+        form=form,
+        errors=errors,
+    )
 
 
 @auth_app.route("/logout/", endpoint="logout")

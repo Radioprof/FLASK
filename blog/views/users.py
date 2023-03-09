@@ -20,7 +20,7 @@ def register():
     if request.method == 'POST' and form.validate_on_submit():
         if User.query.filter_by(email=form.email.data).count():
             form.email.errors.append('email not uniq')
-            return  render_template('users/register.html', form=form)
+            return render_template('users/register.html', form=form)
 
         _user = User(
             username=form.username.data,

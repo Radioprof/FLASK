@@ -5,9 +5,9 @@
 {% endblock %}
 {% block body %}
     <h1>Login as user:</h1>
-    {% if error %}
+    {% if errors %}
         <div class="alert alert-danger" role="alert">
-            {{ error }}
+            {{ errors }}
         </div>
     {% endif %}
     <form method="post">
@@ -15,9 +15,7 @@
         {% for field in ['username', 'password'] %}
             {{ render_field(form[field]) }}
         {% endfor %}
-        <div>
-            {{ form.submit(class="btm btm-primary mb-3") }}
-        </div>
+        {{ form.submit(class="btm btm-primary mb-3") }}
 
     </form>
 {% endblock %}
