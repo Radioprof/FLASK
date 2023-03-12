@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Article detail
+{{ title}}
 {% endblock %}
 
 {% block body %}
 <h1> {{title}}:</h1>
-<h2><a href="{{ url_for('users_app.details', user_id=author)}}">Author:{{author}}</a></h2>
+<h2><a href="{{ url_for('users_app.details', user_id=article.author_id)}}">Author: {{author.user.username}}</a></h2>
 
-<div>{{text}}</div>
+<p>{{text}}</p>
+<div>Created at: {{ article.created_at }}</div>
+<div>Updated at: {{ article.updated_at }}</div>
 
 {% endblock%}
