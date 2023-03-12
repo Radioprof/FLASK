@@ -6,10 +6,19 @@
 
 {% block body %}
 <h1> {{title}}:</h1>
-<h2><a href="{{ url_for('users_app.details', user_id=article.author_id)}}">Author: {{author.user.username}}</a></h2>
+<div class="row">
+    <div class="col-6">
+        <h2><a href="{{ url_for('users_app.details', user_id=article.author_id)}}">Author: {{author.user.username}}</a></h2>
+        <div>{{text}}</div>
+        <div>Created at: {{ article.created_at }}</div>
+        <div>Updated at: {{ article.updated_at }}</div>
+    </div>
+    <div class="col-6">
+        {% for tag in article.tags %}
+            <span class="badge badge-primary">{{ tag.name }}</span>
+        {% endfor %}
+    </div>
 
-<p>{{text}}</p>
-<div>Created at: {{ article.created_at }}</div>
-<div>Updated at: {{ article.updated_at }}</div>
+</div>
 
 {% endblock%}

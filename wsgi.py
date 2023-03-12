@@ -1,7 +1,8 @@
 # from werkzeug.security import generate_password_hash
 
 from blog.app import app
-# from blog.models.database import db
+from blog.models.database import db
+
 
 if __name__ == "__main__":
     app.run(
@@ -10,16 +11,6 @@ if __name__ == "__main__":
     )
 
 
-# @app.cli.command("init-db")
-# def init_db():
-#     """
-#     Run in your terminal:
-#     flask init-db
-#     """
-#     db.create_all()
-#     print("done!")
-#
-#
 # @app.cli.command("create-users")
 # def create_users():
 #     """
@@ -34,3 +25,18 @@ if __name__ == "__main__":
 #     db.session.add(james)
 #     db.session.commit()
 #     print("done! created users:", admin, james)
+
+@app.cli.command("create-tags")
+def create_tags():
+    """
+    Run in your terminal:
+    flask create-tags
+    > done! created tags: <flask> <django> <python> <gb> <sqlite>
+    """
+    from blog.models import Tag
+
+    tags = ('flask', 'django', 'python', 'gb', 'sqlite')
+    for item in tags:
+        db.session.add(Tag(name=item))
+    db.session.commit()
+    print(f"done! created tags: {', '.join(tags)}")
