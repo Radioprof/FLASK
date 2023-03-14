@@ -19,3 +19,6 @@ class Article(db.Model):
 
     author = relationship("Author", back_populates="article")
     tags = relationship("Tag", secondary=article_tag_associations_table, back_populates="article")
+
+    def __str__(self):
+        return self.tags.name

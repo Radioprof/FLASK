@@ -31,7 +31,7 @@ __all__ = [
 @auth_app.route("/login/", methods=["GET", "POST"], endpoint="login")
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('articles_app.list'))
+        return redirect(url_for('users_app.list'))
 
     form = AuthForm(request.form)
     errors = []
