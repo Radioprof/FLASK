@@ -16,6 +16,9 @@ from blog.models.database import db
 
 app = Flask(__name__)
 
+db.init_app(app)
+
+
 # cfg_name = os.environ.get('TestingConfig')
 # app.config.from_object(f"blog.configs.{cfg_name}")
 
@@ -29,7 +32,7 @@ app.register_blueprint(authors_app)
 app.register_blueprint(admin_app)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///blog.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\UCHEBA\\PYTHON PROJECT\\FLASK_PROJECT\\instance\\blog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '(cb!h&a)y8j*i-x62*d#t@3u2t!%6^5c8=n9l3339y)7gq&+o)'
 app.config['WTF_CSRF_ENABLE'] = True
@@ -38,7 +41,6 @@ app.config['OPENAPI_URL_PREFIX'] = '/api/docs'
 app.config['OPENAPI_SWAGGER_UI_PATH'] = '/'
 app.config['OPENAPI_SWAGGER_UI_VERSION'] = '3.22.0'
 
-db.init_app(app)
 
 login_manager.init_app(app)
 # csrf = CSRFProtect(app)
