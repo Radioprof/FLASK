@@ -33,11 +33,11 @@ app.register_blueprint(admin_app)
 
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\UCHEBA\\PYTHON PROJECT\\FLASK_PROJECT\\instance\\blog.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'os.environ.get("SQLALCHEMY_DATABASE_URI")'
-app.config['SECRET_KEY'] = 'os.environ.get("SECRET_KEY")'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://sergey:QoJ3CDZJWP8wAsZcSQ4VZLIyIrM7e0JR@dpg-cgi90e7dvk4vd51khm80-a/db_kiyl'
+# app.config['SECRET_KEY'] = 'os.environ.get("SECRET_KEY")'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SECRET_KEY'] = '(cb!h&a)y8j*i-x62*d#t@3u2t!%6^5c8=n9l3339y)7gq&+o)'
+app.config['SECRET_KEY'] = '(cb!h&a)y8j*i-x62*d#t@3u2t!%6^5c8=n9l3339y)7gq&+o)'
 app.config['WTF_CSRF_ENABLE'] = True
 app.config['FLASK_ADMIN_SWATCH'] = 'LUX'
 app.config['OPENAPI_URL_PREFIX'] = '/api/docs'
